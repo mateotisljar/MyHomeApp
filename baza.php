@@ -2,9 +2,9 @@
 header('Content-Type: text/html; charset=UTF-8');
 class Baza {
     const server = "localhost";
-    const lozinka = "";
-    const baza = "mydb";
-    const korisnik = "root";
+    const lozinka = "nogomet0701";
+    const baza = "id1296660_mydb";
+    const korisnik = "id1296660_mtisljar";
 
     private function spojiNaBazu() {
         $mysqli = new mysqli(self::server, self:: korisnik, self::lozinka, self::baza);
