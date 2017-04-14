@@ -303,7 +303,9 @@ br{
   font-weight: bold;
   text-transform: uppercase;
 }
-
+.home, .links, .home:visited, .links:visited{
+  color: #8bcc12;
+}
 .new_bookmark:visited{
   color: whitesmoke;
 }
