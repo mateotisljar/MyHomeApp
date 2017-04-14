@@ -3,19 +3,7 @@ session_start();
 ob_start();
 include_once 'baza.php';
 $baza = new Baza();
-$obavijest = "";
-$korisnik = "";
-if(!isset($_SESSION['email'])){
-  header("Location: prijava.php");
-}else{
-  $korisnik = $_SESSION['email'];
-  $upit = "SELECT * FROM users WHERE email = '{$korisnik}'";
-  $rezultat = $baza->select($upit);
-  $podaci = $rezultat->fetch_array();
-  if(empty($podaci['ime']) || empty($podaci['prezime']) || empty($podaci['lozinka']) || empty($podaci['ponovljena_lozinka']) || empty($podaci['telefon']) || empty($podaci['email']) || empty($podaci['datum_rodjenja']) || empty($podaci['slika'])){
-    $poruka = "Nisu popunjeni svi Vaši podaci, nadopunite ih na profilu.";
-  }
-}
+if(!isset($_SESSION['email'])) header("Location: prijava.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,9 +12,8 @@ if(!isset($_SESSION['email'])){
     <meta name="author" content="Mateo Tišljar">
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="js/script.js"></script>
-    <title>Bookmarks</title>
+    <title>Pregled bookmarka</title>
   </head>
   <body>
     <header>
@@ -89,53 +76,86 @@ if(!isset($_SESSION['email'])){
       </script>
       <?php } ?>
     </div>
-
-
-      <div class="index_sadrzaj">
-        <div class="new_bookmark_div">
-          <a class="new_bookmark" href="all_bookmarks.php">Bookmarks</a>
-          <a class="new_bookmark" href="all_informations.php">Pretplate</a>
-        </div>
-        <?php if(!empty($poruka)){
-          ?>
-          <div class="greske">
-            <p>
-          <?php echo $poruka;
-          ?>
-           </p>
-          </div>
-          <?php
-          }
+    <div class="sadrzaj_pregled_bookmarka">
+      <div class="new_bookmark_div">
+        <a class="new_bookmark" href="informations.php">Dodaj</a>
+      </div>
+      <?php
+      if(isset($_GET['uspjesno']) && $_GET['uspjesno'] ==1){
         ?>
-      <div class="index_bookmarks">
+        <div class="uspjeh">
+          <p>
+            <?php
+            echo "Uspješno ste dodali novu pretplatu.";
+             ?>
+          </p>
+        </div>
         <?php
-        $korisnik = $_SESSION['email'];
-        $upit = "SELECT * from users where email = '{$korisnik}'";
+      }else if(isset($_GET['uspjesno']) && $_GET['uspjesno'] ==2){
+        $poruka = "Netočan id pretplate koju želite obrisati.";
+      }else if(isset($_GET['uspjesno']) && $_GET['uspjesno'] ==3){
+        ?>
+        <div class="uspjeh">
+          <p>
+            <?php
+            echo "Uspješno ste prekinuli pretplatu.";
+             ?>
+          </p>
+        </div>
+        <?php
+      }
+       ?>
+       <?php if(!empty($poruka)){
+         ?>
+         <div class="greske">
+           <p>
+         <?php echo $poruka;
+         ?>
+          </p>
+         </div>
+         <?php
+         }
+       ?>
+      <div>
+        <?php
+        $user_id = $_SESSION['id_user'];
+        $upit = "SELECT * FROM user_information_conf where id_user = '{$user_id}' order by redni_broj asc";
         $rezultat = $baza->select($upit);
-        $podaci = mysqli_fetch_array($rezultat);
-        $id_korisnika = $podaci['id_user'];
-        $upit = "SELECT * FROM bookmarks WHERE id_user = '{$id_korisnika}'";
-        $rezultat = $baza->select($upit);
-        while($podaciBookmarka = mysqli_fetch_array($rezultat)){
+        if($rezultat->num_rows == 0){
+          echo "<div class='bookmark_error'>"
+          . "<p>Niste se pretplatili ni na jednu informaciju, pretplatite se klikom na gumb.</p>"
+          . "</div>";
+        }else{
           ?>
-          <div id="bookmark_link">
-            <a href="<?php echo $podaciBookmarka['url']; ?>" target="_blank">
-              <img src="<?php if(empty($podaciBookmarka['slika'])) echo 'img/default_bookmark.png'; else echo $podaciBookmarka['slika']; ?>" alt="Bookmark">
-              <p class="bookmark_naziv"><?php echo $podaciBookmarka['naziv']; ?></p>
-              <p class="bookmark_opis"><?php echo $podaciBookmarka['opis']; ?></p>
-            </a>
-          </div>
+          <div class="all_bookmarks_div">
+          <div class="bookmark_header">
+            <p class="b_header_redni_broj">Redni broj</p>
+            <p class="b_header_opis">Opis</p>
+          </div><br>
           <?php
+          while($podaciBookmarka = $rezultat->fetch_array()){
+            $redniBroj = $podaciBookmarka['redni_broj'];
+            $opis = $podaciBookmarka['opis'];
+            $id = $podaciBookmarka['id_conf'];
+            echo "<div class='bookmark_row'>"
+            . "<p class='b_redni_broj'>"
+            . $redniBroj
+            . "</p>"
+            . "<p class='b_opis'>"
+            . $opis
+            . "</p>"
+            . "<a class='x' href='delete.php?id_conf={$id}'>&#10006;</a>"
+            . "</div>";
+          }
         }
 
-         ?>
-         <div class="add_bookmark">
-           <a href="bookmarks.php">
-             <img src="img/add_bookmark.png" alt="Add bookmark">
-           </a>
-         </div>
+        ?>
+
+        </div>
       </div>
     </div>
+
+
   </body>
 </html>
 <?php

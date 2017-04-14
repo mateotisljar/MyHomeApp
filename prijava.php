@@ -9,90 +9,103 @@ $baza = new Baza();
   <head>
     <meta charset="utf-8">
     <meta name="author" content="Mateo Tišljar">
-    <title>Prijava</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="js/script.js"></script>
+    <title>Pregled bookmarka</title>
   </head>
   <body>
     <header>
-      <?php
-        if(isset($_SESSION['email'])){
-          ?>
-          <a href="odjava.php">Odjava</a>
-          <?php
-        }
-      ?>
     </header>
     <aside>
       <nav>
         <ul>
-          <li>
-            <a>Početna stranica</a>
+          <li class="li_pocetni">
+            <a class="home" href="index.php">MyHomeApp</a>
           </li>
-          <li>
-            <a>Prijava</a>
+          <?php
+            if(isset($_SESSION['email'])){
+              ?>
+              <li class="li_odjava">
+                <a class="links" href="odjava.php">Odjava</a>
+              </li>
+              <li class="li_profil">
+                <a class="links" href="profil.php">Profil</a>
+              </li>
+              <?php
+            }else{
+          ?>
+          <li class="li_prijava">
+            <a class="links" href="prijava.php">Prijava</a>
           </li>
-          <li>
-            <a>Registracija</a>
+          <li class="li_registracija">
+            <a class="links" href="registracija.php">Registracija</a>
           </li>
+          <?php } ?>
         </ul>
       </nav>
     </aside>
-    <div class="sadrzaj_prijava">
-      <div>
-        <fieldset>
-          <legend>Prijava</legend>
-            <form method="POST" id="forma" name="forma" enctype="multipart/form-data"  >
-              <label class="labele" for="email">Email adresa: </label>
-              <input type="email" class="inputi" id="email" size="20" name="email" value="<?php
-                if(isset($_COOKIE['email'])) echo $_COOKIE['email'];
-              ?>"><br>
-              <span class="nevidljivo"></span>
+    <?php
+      $poruka = "";
+      $lozinka ="";
+      $email = "";
+      $upit = "";
+      $rezultat= "";
+      if(isset($_POST['submit'])){
+        $lozinka = $_POST['password'];
+        $email = $_POST['email'];
 
-              <label class="labele" for="password">Lozinka: </label>
+        $upit = "select * from users where email = '{$email}' and lozinka = '{$lozinka}'";
+        $rezultat = $baza->select($upit);
+        if(mysqli_num_rows($rezultat) == 1){
+          $prijavljeni = mysqli_fetch_array($rezultat);
+          $_SESSION['email'] = $prijavljeni['email'];
+          $_SESSION['id_user'] = $prijavljeni['id_user'];
+          if(isset($_POST['checkbox'])){
+            setcookie('email', $prijavljeni['email'], time() + (86400 * 3));
+            setcookie('lozinka', $prijavljeni['lozinka'], time() + (86400 * 3));
+          }
+          header("Location: index.php");
+        }else{
+          $poruka .= "Neispravan email i lozinka. Ponovite. \r\n";
+          ?>
+
+          <?php
+        }
+
+      }
+    ?>
+    <div class="sadrzaj_prijava">
+      <?php if(!empty($poruka)){
+        ?>
+        <div class="greske">
+          <p>
+        <?php echo $poruka;
+        ?>
+         </p>
+        </div>
+        <?php
+        }
+      ?>
+      <div class="center_div">
+            <form method="POST" id="forma" name="forma" enctype="multipart/form-data"  >
+              <p>Unesite podatke za prijavu</p>
+              <input type="email" placeholder="Email" class="inputi" id="email" size="20" name="email" value="<?php
+                if(isset($_COOKIE['email'])) echo $_COOKIE['email'];
+              ?>">
+
               <input type="password" class="inputi" name="password" id="password" placeholder="Lozinka" value="<?php
                   if(isset($_COOKIE['lozinka'])) echo $_COOKIE['lozinka'];
-              ?>"><br>
-              <span class="nevidljivo"></span>
+              ?>">
+              <label>Zapamti me?</label>
+              <input type="checkbox" id="checkbox" name="checkbox" >
 
-              <label for="checkbox" class="labele">Zapamti me?</label>
-              <input type="checkbox" id="checkbox" name="checkbox" class="inputi">
-
-              <input type="submit" name="submit" id="submit" value="Prijavi se" class="inputi">
-              <a href="zaboravljena_lozinka.php">Zaboravljena lozinka?</a>
+              <input type="submit" name="submit" id="submit" value="Prijava" class="inputi">
+              <a class="zab_loz" href="zaboravljena_lozinka.php">Zaboravljena lozinka?</a>
 
             </form>
 
-      <?php
-        $poruka = "";
-        $lozinka ="";
-        $email = "";
-        $upit = "";
-        $rezultat= "";
-        if(isset($_POST['submit'])){
-          $lozinka = $_POST['password'];
-          $email = $_POST['email'];
 
-          $upit = "select * from users where email = '{$email}' and lozinka = '{$lozinka}'";
-          $rezultat = $baza->select($upit);
-          if(mysqli_num_rows($rezultat) == 1){
-            $prijavljeni = mysqli_fetch_array($rezultat);
-            $_SESSION['email'] = $prijavljeni['email'];
-            if(isset($_POST['checkbox'])){
-              setcookie('email', $prijavljeni['email'], time() + (86400 * 3));
-              setcookie('lozinka', $prijavljeni['lozinka'], time() + (86400 * 3));
-            }
-            header("Location: index.php");
-          }else{
-            $poruka .= "Neispravan email i lozinka. Ponovite. \r\n";
-            ?>
-            <div class="greske">
-              <p><span><?php echo $poruka; ?></span></p>
-            </div>
-            <?php
-          }
-
-        }
-      ?>
-      </fieldset>
     </div>
     </div>
 

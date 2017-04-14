@@ -1,0 +1,348 @@
+header{
+
+}
+body{
+  margin: 0;
+  background:#e5e5e5;
+  font-family: "Modum", Calibri, serif;
+}
+.sidebar p{
+  color: white;
+  width: 40%;
+  float: left;
+  display: inline;
+}
+nav{
+  height: 80px;
+  position: relative;
+  background: #151515;
+}
+nav li{
+  list-style: none;
+}
+.li_pocetni{
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  font-size: xx-large;
+  color: #8bcc12;
+}
+.li_prijava, .li_profil{
+  position: absolute;
+  top: 0;
+  left: 90%;
+}
+.li_registracija, .li_odjava{
+  position: absolute;
+  top: 40px;
+  left: 90%;
+
+}
+.li_pocetni a:visited, .li_odjava a:visited,
+.li_profil a:visited, .li_registracija a:visited, .li_prijava a:visited{
+  color: #8bcc12;
+}
+.li_pocetni a:hover, .li_odjava a:hover,
+.li_profil a:hover, .li_registracija a:hover, .li_prijava a:hover{
+  color: #618e0c;
+}
+.li_odjava a, .li_profil a{
+  text-decoration: none;
+  color: #8bcc12;
+}
+.center_div{
+  width: 20%;
+  margin: 5% auto;
+  border: 2px solid black;
+  padding: 30px;
+  text-align: center;
+  background-color: #151515;
+  display: block;
+}
+.profil_div, .bookmarks_div{
+  width: 40%;
+}
+
+.center_div .inputi{
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  height: 35px;
+  border: 2px solid #151515;
+  padding-left: 10px;
+  border-left: 10px solid #8bcc12;
+  background-color: #e5e5e5;
+  width: 70%;
+}
+.profil_div .inputi{
+  width: 50%;
+}
+.slika_input{
+  float:right;
+}
+.center_div #submit{
+  border: 0;
+  height: 40px;
+  width: 50%;
+  margin: 10px auto;
+  margin-top: 30px;
+  background-color: #8bcc12;
+  cursor: pointer;
+  font-size: medium;
+  text-transform: uppercase;
+  font-weight: bold;
+  clear: both;
+  display: block;
+}
+.registracija_div #submit{
+  width: 150px;
+}
+.center_div #submit:hover{
+  background-color: #618e0c;
+}
+.center_div label, .center_div a:visited, .center_div a, .center_div p{
+  color: #e5e5e5;
+}
+.center_div p{
+  font-size: large;
+  margin-top: 0;
+  margin-bottom: 40px;
+}
+.profil_div .inputi{
+  display: inline;
+  float: right;
+}
+.profil_div label{
+  float: left;
+  display: inline;
+  margin-top: 10px;
+}
+.slika_profila{
+  width: 40%;
+}
+
+#greske{
+  color: red;
+}
+.zab_loz{
+  color: whitesmoke !important;
+}
+.index_bookmarks{
+  width: 100%;
+  height: 100%;
+}
+#bookmark_link{
+  position: relative;
+  width: 20%;
+  max-height: 200px;
+  height: 20%;
+  overflow: hidden;
+  display: inline;
+  float: left;
+  margin-right: 3%;
+}
+#bookmark_link img{
+  width: 100%;
+  height: auto;
+}
+.bookmark_naziv{
+  position: absolute;
+  top: -55px;
+  -webkit-transition-property: top, bottom;
+  -webkit-transition-duration: 0.5s;
+  margin: 0 auto;
+  background: #8bcc12;
+  width: 100%;
+}
+.bookmark_opis{
+  position: absolute;
+  bottom: -50px;
+  -webkit-transition-property: top, bottom;
+  -webkit-transition-duration: 0.5s;
+  margin: 0 auto;
+  width: 100%;
+  background: #8bcc12;
+}
+.index_sadrzaj{
+  width: 70%;
+  margin: 0 auto;
+}
+.index_bookmarks{
+  display: inline-block;
+}
+.add_bookmark{
+  transition: 0.5s ease;
+  width: 20%;
+  overflow: hidden;
+  display: inline;;
+  float: left;
+}
+.add_bookmark img{
+  width: 75%;
+}
+.add_bookmark:hover{
+  -moz-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+.center_div a:visited, .index_bookmarks a:visited{
+  color: black;
+}
+.bookmark_header{
+  background: #8bcc12;
+  display: block;
+  height: 50px;
+  align-items: center;
+  text-align: center;
+  border: 10px solid #e5e5e5;
+  border-left: 15px solid #151515;
+  border-right: 15px solid #151515;
+  margin-left: -10px;
+}
+.b_header_redni_broj{
+  display: inline;
+  float: left;
+  width: 20%;
+  font-weight: bold;
+  border-right: 1px solid #151515;
+  margin-right: 5px;
+}
+.b_header_naziv{
+  display: inline;
+  float: left;
+  width: 30%;
+  font-weight: bold;
+  border-right: 1px solid #151515;
+  margin-right: 5px;
+}
+.b_header_opis{
+  display: inline;
+  float: left;
+  width: 30%;
+  font-weight: bold;
+  border-right: 1px solid #151515;
+
+}
+.b_naziv, .b_opis, .b_redni_broj{
+  margin: auto;
+  margin-bottom: 2px;
+  display: inline-block;
+  float: left;
+  color: black;
+  height: 20px;
+  vertical-align: middle;
+  padding: 10px 0;
+  border-right: 1px solid #555;
+}
+.b_naziv{
+  width: 30%;
+}
+.b_redni_broj{
+  width: 20%;
+}
+.b_opis{
+  width: 30%;
+}
+.bookmark_row{
+  height: 40px;
+  align-items: center;
+  text-align: center;
+  clear: left;
+  cursor: pointer;
+}
+br{
+  height: 1px;
+}
+.x{
+  visibility: hidden;
+  font-size: x-large;
+  color: red;
+  padding: 5px 0;
+  text-decoration: none;
+  display: inline-block;
+}
+.x:hover{
+  color: whitesmoke;
+}
+.uspjeh{
+  height: 60px;
+  text-align: center;
+  align-items: center;
+  background: rgba(139,204,18, 0.7);
+  border-radius: 20px;
+  width: 40%;
+  margin: 0 auto 20px auto;
+  margin-bottom: 20px;
+}
+.uspjeh p{
+  padding: 20px 0;
+  margin: 0 auto;
+}
+.sidebar{
+  width: 20%;
+  float:left;
+  background: #151515;
+  height: 1000px;
+  display: inline-block;
+}
+.sadrzaj_pregled_bookmarka, .index_sadrzaj{
+  float: left;
+  display: inline;
+  width: 70%;
+  padding: 30px;
+}
+.new_bookmark{
+  padding: 10px 20px;
+  background: #151515;
+  text-decoration: none;
+  color: whitesmoke;
+  display: inline-block;
+  margin-bottom: 30px;
+  border: 5px solid #e5e5e5;
+  border-left: 10px solid #8bcc12;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.new_bookmark:visited{
+  color: whitesmoke;
+}
+.new_bookmark:hover{
+  background: #222;
+}
+.home{
+  padding: 5px 20px;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: inline-block;
+  border: 5px solid #151515;
+  border-left: 10px solid #8bcc12;
+  border-right: 10px solid #8bcc12;
+}
+.links{
+  padding: 5px 20px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  border: 1px solid #151515;
+  border-left: 5px solid #8bcc12;
+}
+.greske{
+  height: 60px;
+  text-align: center;
+  align-items: center;
+  background: rgba(253,41,41, 0.7);
+  border-radius: 20px;
+  width: 40%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.greske p{
+  padding: 20px 0;
+  margin: 0 auto;
+}
+.bookmark_img{
+  width: 40%;
+}

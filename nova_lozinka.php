@@ -3,53 +3,58 @@ session_start();
 ob_start();
 include_once 'baza.php';
 $baza = new Baza();
-if(isset($_SESSION['email'])){
-  header("Location: index.php");
-}
+if(!isset($_SESSION['email'])) header("Location: prijava.php");
 ?>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <meta name="author" content="Mateo Tišljar">
-    <title>Nova lozinka</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="js/script.js"></script>
+    <title>Pregled bookmarka</title>
   </head>
   <body>
+    <header>
+    </header>
     <aside>
       <nav>
         <ul>
-          <li>
-            <a>Početna stranica</a>
+          <li class="li_pocetni">
+            <a class="home" href="index.php">MyHomeApp</a>
           </li>
-          <li>
-            <a>Prijava</a>
+          <?php
+            if(isset($_SESSION['email'])){
+              ?>
+              <li class="li_odjava">
+                <a class="links" href="odjava.php">Odjava</a>
+              </li>
+              <li class="li_profil">
+                <a class="links" href="profil.php">Profil</a>
+              </li>
+              <?php
+            }else{
+          ?>
+          <li class="li_prijava">
+            <a class="links" href="prijava.php">Prijava</a>
           </li>
-          <li>
-            <a>Registracija</a>
+          <li class="li_registracija">
+            <a class="links" href="registracija.php">Registracija</a>
           </li>
+          <?php } ?>
         </ul>
       </nav>
     </aside>
     <div class="sadrzaj_nova_lozinka">
-      <div>
-        <fieldset>
-          <legend>Nova lozinka</legend>
+      <div class="center_div">
           <form method="POST" id="forma" name="forma" enctype="multipart/form-data"  >
-            <label class="labele" for="email">Email adresa: </label>
-            <input type="email" class="inputi" id="email" size="20" name="email"><br>
-            <span class="nevidljivo"></span>
+            <p>Unesite podatke za novu lozinku</p>
+            <input type="email" placeholder="Email" class="inputi" id="email" size="20" name="email">
 
-            <label class="labele" for="password">Lozinka: </label>
-            <input type="password" class="inputi" name="password" id="password" placeholder="Lozinka"><br>
-            <span class="nevidljivo"></span>
-
-            <label class="labele" for="password">Ponovi lozinka: </label>
-            <input type="password" class="inputi" name="password2" id="password2" placeholder="Lozinka"><br>
-            <span class="nevidljivo"></span>
-
-            <label class="labele" for="kod">Kod: </label>
-            <input type="text" class="inputi" name="kod" id="kod" placeholder="Kod"><br>
-            <span class="nevidljivo"></span>
+            <input type="password" class="inputi" name="password" id="password" placeholder="Lozinka">
+            <input type="password" class="inputi" name="password2" id="password2" placeholder="Ponovljena lozinka">
+            <input type="text" class="inputi" name="kod" id="kod" placeholder="Kod">
 
             <input type="submit" name="submit" id="submit" value="Prijavi se" class="inputi">
 
@@ -96,7 +101,6 @@ if(isset($_SESSION['email'])){
           <?php
         }
       ?>
-      </fieldset>
     </div>
     </div>
 
